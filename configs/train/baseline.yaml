@@ -1,0 +1,56 @@
+id: 1
+pretrained: Null
+model:
+    name: baseline_eff_net
+    args:
+        version: 1
+optimizer:
+    name:                         Adam
+    args:
+        lr:                   0.01
+loss:
+    name: CrossEntropyLoss
+    args:
+        
+metric:
+    name: Accuracy
+    args:
+scheduler:
+    name:                         ReduceLROnPlateau
+    args:
+        mode:                     min
+        factor:                   0.5
+        patience:                 5 
+        verbose:                  True
+dataset:
+    train:
+        name: shopee_raw
+        args:
+            data_root_dir:      data/          
+            train_dir:          train/ 
+            test_dir:           test/
+            csv_train_dir:      train.csv  
+            csv_test_dir:       test.csv
+            is_train:           True  
+        loader:
+            name: shopee_loader
+            args:
+                batch_size:         32
+                shuffle:            True
+    val:
+        name: shopee_raw
+        args:
+            data_root_dir:      data/          
+            train_dir:          train/ 
+            test_dir:           test/
+            csv_train_dir:      train.csv  
+            csv_test_dir:       test.csv
+            is_train:           True  
+        loader:
+            name: shopee_loader
+            args:
+                batch_size:         32
+                
+    nepochs: 10
+    val_step: 1
+    log_step: 1

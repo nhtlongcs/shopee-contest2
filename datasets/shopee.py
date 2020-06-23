@@ -40,9 +40,10 @@ class shopee_raw(data.Dataset):
         else:
             item_path = self.test_dir + self.data[index]
         # return (item_path, self.labels[index])  # debug line
-        image = Image.open(item_path)
+        image = Image.open(item_path).convert('RGB')
 
-        tf = tvtf.Compose([tvtf.ToTensor(),
+        tf = tvtf.Compose([tvtf.Resize(224),
+                           tvtf.ToTensor(),
                            tvtf.Normalize(mean=[0.485, 0.456, 0.406],
                                           std=[0.229, 0.224, 0.225])
                            ])

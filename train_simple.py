@@ -89,7 +89,8 @@ def train(config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', default='configs/train/baseline.yaml')
+    parser.add_argument(
+        '--config', default='configs/train/baseline_colab.yaml')
     parser.add_argument('--gpus', default=None)
     parser.add_argument('--debug', action='store_true')
 

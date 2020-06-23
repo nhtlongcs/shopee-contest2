@@ -1,56 +1,56 @@
 id: 1
 pretrained: Null
 model:
-    name: baseline_eff_net
+    name:                       baseline_eff_net
     args:
-        version: 1
+        version:                1
 optimizer:
-    name:                         Adam
+    name:                       Adam
     args:
-        lr:                   0.01
+        lr:                     0.01
 loss:
-    name: CrossEntropyLoss
+    name:                       CrossEntropyLoss
     args:
         
 metric:
-    name: Accuracy
-    args:
+    name:                       Accuracy
+    args:                       Null
 scheduler:
-    name:                         ReduceLROnPlateau
+    name:                       ReduceLROnPlateau
     args:
-        mode:                     min
-        factor:                   0.5
-        patience:                 5 
-        verbose:                  True
+        mode:                   min
+        factor:                 0.5
+        patience:               5 
+        verbose:                True
 dataset:
     train:
         name: shopee_raw
         args:
-            data_root_dir:      data/          
-            train_dir:          train/ 
-            test_dir:           test/
+            data_root_dir:      /home/ken/shopee_ws/data/         
+            train_dir:          train/train/
+            test_dir:           test/test/
             csv_train_dir:      train.csv  
             csv_test_dir:       test.csv
             is_train:           True  
         loader:
             name: shopee_loader
             args:
-                batch_size:         32
-                shuffle:            True
+                batch_size:     1
+                shuffle:        True
     val:
         name: shopee_raw
         args:
-            data_root_dir:      data/          
-            train_dir:          train/ 
-            test_dir:           test/
+            data_root_dir:      /home/ken/shopee_ws/data/          
+            train_dir:          train/train/
+            test_dir:           test/test/
             csv_train_dir:      train.csv  
             csv_test_dir:       test.csv
             is_train:           True  
         loader:
             name: shopee_loader
             args:
-                batch_size:         32
-                
+                batch_size:     32
+trainer: 
     nepochs: 10
     val_step: 1
     log_step: 1

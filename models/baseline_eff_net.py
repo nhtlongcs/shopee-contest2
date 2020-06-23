@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from efficientnet_pytorch import EfficientNet
 
+
 class baseline_eff_net(nn.Module):
     """Baseline model"""
 
@@ -12,7 +13,7 @@ class baseline_eff_net(nn.Module):
         self.extractor = EfficientNet.from_pretrained(
             f'efficientnet-b{version}')
         self.feature_dim = self.extractor._fc.in_features
-        
+
     def forward(self, x):
         x = self.extractor.extract_features(x)
         x = self.extractor._avg_pooling(x)

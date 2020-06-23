@@ -69,8 +69,7 @@ def train(config):
 
     # 6: Define metrics
     set_seed()
-    metric = {mcfg['name']: get_instance(mcfg)
-              for mcfg in config['metric']}
+    metric = {config['metric']['name']: get_instance(config['metric'])}
 
     # 6: Create trainer
     set_seed()

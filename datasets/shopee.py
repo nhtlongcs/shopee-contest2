@@ -2,6 +2,9 @@ from torch.utils import data
 import torch
 import os
 import csv
+from PIL import Image
+import numpy as np
+from torchvision import transforms as tvtf
 
 
 class shopee_raw(data.Dataset):
@@ -14,32 +17,44 @@ class shopee_raw(data.Dataset):
         self.train_dir = os.path.join(self.root_dir, train_dir)
         self.test_dir = os.path.join(self.root_dir, test_dir)
 
-        csv_train_dir = self.root_dir + csv_train_dir 
-        csv_test_dir = self.root_dir + csv_test_dir 
+        csv_train_dir = self.root_dir + csv_train_dir
+        csv_test_dir = self.root_dir + csv_test_dir
 
         self.data = None
         self.labels = None
 
-        # if self.is_train:
-        #     self.data = list(csv.reader(open(csv_train_dir)))
-        # elif self.is_train == False:
-        #     self.data = list(csv.reader(open(csv_test_dir)))
+        if self.is_train:
+            self.data = list(csv.reader(open(csv_train_dir)))
+        elif self.is_train == False:
+            self.data = list(csv.reader(open(csv_test_dir)))
 
-        # _, self.labels = zip(*self.data)
-        # self.labels = list(map(int, self.labels))
+        self.data.pop(0)  # clear header
+        self.data, self.labels = zip(*self.data)
+        self.data = [os.path.join(self.labels[i], self.data[i])
+                     for i in range(len(self.data))]
+        self.labels = list(map(int, self.labels))
 
     def __getitem__(self, index):
         if self.is_train:
             item_path = self.train_dir + self.data[index]
         else:
             item_path = self.test_dir + self.data[index]
-        return (torch.load(item_path), self.labels[index])
+        # return (item_path, self.labels[index])  # debug line
+        image = Image.open(item_path)
+
+        tf = tvtf.Compose([tvtf.ToTensor(),
+                           tvtf.Normalize(mean=[0.485, 0.456, 0.406],
+                                          std=[0.229, 0.224, 0.225])
+                           ])
+        image = tf(image)
+        return (image, self.labels[index])
 
     def __len__(self):
-        return len(data)
+        return len(self.data)
 
 
 # test
 if __name__ == "__main__":
-    dataset = shopee_raw('/content/data/', 'train/',
-                         'test/', 'train.csv', 'test.csv')
+    dataset = shopee_raw('/home/ken/shopee_ws/data/', 'train/train/',
+                         'test/test/', 'train.csv', 'test.csv')
+    print(dataset[0])

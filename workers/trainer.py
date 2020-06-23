@@ -30,15 +30,15 @@ class Trainer():
         self.metric = metric
 
         # Train ID
-        self.train_id = self.config.get('id', 'None')
-        self.train_id += '-' + datetime.now().strftime('%Y_%m_%d-%H_%M_%S')
+        self.train_id = str(self.config.get('id', 'None'))
+        self.train_id += '-' + \
+            datetime.now().strftime('%Y_%m_%d-%H_%M_%S')
 
         # Get arguments
         self.nepochs = self.config['trainer']['nepochs']
         self.log_step = self.config['trainer']['log_step']
         self.val_step = self.config['trainer']['val_step']
         self.debug = self.config['debug']
-
         # Instantiate global variables
         self.best_loss = np.inf
         self.best_metric = {k: 0.0 for k in self.metric.keys()}

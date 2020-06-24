@@ -26,7 +26,7 @@ dataset:
     train:
         name: shopee_raw
         args:
-            data_root_dir:      /content/shopee-contest2/         
+            data_root_dir:      /content/data/         
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
@@ -40,7 +40,7 @@ dataset:
     val:
         name: shopee_raw
         args:
-            data_root_dir:      /content/shopee-contest2/          
+            data_root_dir:      /content/data/          
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  

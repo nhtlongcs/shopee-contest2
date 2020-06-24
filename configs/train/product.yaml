@@ -1,0 +1,45 @@
+gpus:                             null
+pretrained:                       null
+model: 
+    name:                         SimpleEfficientNet
+    args:
+        nclasses:                 42
+optimizer:
+    name:                         Adam
+    args:
+        lr:                       0.01
+        # momentum:                 0.5
+loss:
+    name:                         CrossEntropyLoss
+    args:
+        # gamma:                    0.5
+metric:
+    - name:                       Accuracy
+      args:
+scheduler:
+    name:                         ReduceLROnPlateau
+    args:
+        mode:                     min
+        factor:                   0.5 
+        patience:                 5 
+        verbose:                  True
+dataset:
+    train:
+        name:                     Product
+        args:
+            root_dir:            data/train/train
+            csv_path:               data/train.csv       
+        loader:
+            batch_size:           64
+            shuffle:              True
+    val: 
+        name:                     Product
+        args:
+            root_dir:            data/train/val
+            csv_path:               data/val.csv   
+        loader:
+            batch_size:           64
+trainer:
+    nepochs:                      5
+    val_step:                 1
+    log_step:                     1

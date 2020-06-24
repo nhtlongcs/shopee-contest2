@@ -4,6 +4,7 @@ model:
     name:                       baseline_eff_net
     args:
         version:                1
+        nclasses:               42
 optimizer:
     name:                       Adam
     args:
@@ -11,7 +12,7 @@ optimizer:
 loss:
     name:                       CrossEntropyLoss
     args:
-        
+        ignore_index:           42
 metric:
     name:                       Accuracy
     args:                       Null

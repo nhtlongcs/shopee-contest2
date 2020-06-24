@@ -7,18 +7,25 @@ from efficientnet_pytorch import EfficientNet
 class baseline_eff_net(nn.Module):
     """Baseline model"""
 
-    def __init__(self, version, nclasses):
+    def __init__(self, version, nclasses, depth=3):
         super().__init__()
         assert version in range(9)
         self.extractor = EfficientNet.from_pretrained(
             f'efficientnet-b{version}')
         self.feature_dim = self.extractor._fc.in_features
-
-        self.cls = nn.Linear(self.feature_dim, nclasses)
+        print(self.feature_dim)
+        self.cls_1 = nn.Linear(self.feature_dim, 640)
+        self.cls_2 = nn.Linear(640, 320)
+        self.cls_3 = nn.Linear(320, 160)
+        self.cls_3 = nn.Linear(160, 80)
+        self.cls_4 = nn.Linear(80, nclasses)
 
     def forward(self, x):
         x = self.extractor.extract_features(x)
-        x = self.extractor._avg_pooling(x)
+        x = self.extractor._avg_pooling(F.relu(x))
         x = x.view(x.size(0), -1)
-        x = self.cls(x)
+        x = F.relu(self.cls_1(x))
+        x = F.relu(self.cls_2(x))
+        x = F.relu(self.cls_3(x))
+        x = self.cls_4(x)
         return x

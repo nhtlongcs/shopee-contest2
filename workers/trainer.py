@@ -93,11 +93,7 @@ class Trainer():
         self.model.train()
         print('Training........')
         progress_bar = tqdm(dataloader)
-        cnt = 0
         for i, (inp, lbl) in enumerate(progress_bar):
-            cnt += 1
-            if (cnt >= 3):
-                break
             # 1: Load img_inputs and labels
             inp = move_to(inp, self.device)
             lbl = move_to(lbl, self.device)
@@ -143,11 +139,7 @@ class Trainer():
         self.model.eval()
         print('Evaluating........')
         progress_bar = tqdm(dataloader)
-        cnt = 0
         for i, (inp, lbl) in enumerate(progress_bar):
-            cnt += 1
-            if (cnt >= 3):
-                break
             # 1: Load inputs and labels
             inp = move_to(inp, self.device)
             lbl = move_to(lbl, self.device)

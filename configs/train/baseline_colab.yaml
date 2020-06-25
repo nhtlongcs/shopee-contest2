@@ -13,10 +13,12 @@ loss:
     name:                       CrossEntropyLoss
     args:
         ignore_index:           42
-        
 metric:
-    name:                       Accuracy
-    args:                       Null
+    -   name:                       Accuracy
+        args:                       Null
+    -   name:                       ConfusionMatrix
+        args:                       
+            nclasses:               42
 scheduler:
     name:                       ReduceLROnPlateau
     args:

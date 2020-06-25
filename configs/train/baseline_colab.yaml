@@ -36,11 +36,11 @@ dataset:
             csv_train_dir:      train.csv  
             csv_val_dir:        train.csv
             csv_test_dir:       test.csv
-            is_train:           True  
+            is_train:           False  
         loader:
             name: shopee_loader
             args:
-                batch_size:     64
+                batch_size:     128
                 shuffle:        True
     val:
         name: shopee_raw
@@ -55,7 +55,7 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     64
+                batch_size:     128
 trainer: 
     nepochs: 10
     cp_dir: /content/gdrive/My\ Drive/

@@ -8,17 +8,18 @@ from torchvision import transforms as tvtf
 
 
 class shopee_raw(data.Dataset):
-    def __init__(self, data_root_dir, train_dir, test_dir, csv_train_dir, csv_test_dir, is_train=True):
+    def __init__(self, data_root_dir, train_dir, test_dir, csv_train_dir, csv_val_dir, csv_test_dir, is_train=True, infer_mode=False):
         super().__init__()
 
         self.is_train = is_train
         self.root_dir = data_root_dir
 
         self.train_dir = os.path.join(self.root_dir, train_dir)
+        self.val_dir = os.path.join(self.root_dir, train_dir)
         self.test_dir = os.path.join(self.root_dir, test_dir)
 
         csv_train_dir = self.root_dir + csv_train_dir
-        csv_test_dir = self.root_dir + csv_test_dir
+        csv_val_dir = self.root_dir + csv_val_dir
 
         self.data = None
         self.labels = None
@@ -26,7 +27,7 @@ class shopee_raw(data.Dataset):
         if self.is_train:
             self.data = list(csv.reader(open(csv_train_dir)))
         elif self.is_train == False:
-            self.data = list(csv.reader(open(csv_test_dir)))
+            self.data = list(csv.reader(open(csv_val_dir)))
 
         self.data.pop(0)  # clear header
         self.data, self.labels = zip(*self.data)
@@ -38,7 +39,7 @@ class shopee_raw(data.Dataset):
         if self.is_train:
             item_path = self.train_dir + self.data[index]
         else:
-            item_path = self.test_dir + self.data[index]
+            item_path = self.val_dir + self.data[index]
         # return (item_path, self.labels[index])  # debug line
         image = Image.open(item_path).convert('RGB')
 
@@ -58,5 +59,5 @@ class shopee_raw(data.Dataset):
 # test
 if __name__ == "__main__":
     dataset = shopee_raw('/home/ken/shopee_ws/data/', 'train/train/',
-                         'test/test/', 'train.csv', 'test.csv')
+                         'test/test/', 'train.csv', 'val.csv', 'test.csv')
     print(dataset[0])

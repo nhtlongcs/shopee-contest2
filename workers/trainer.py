@@ -18,7 +18,8 @@ class Trainer():
                  criterion,
                  optimier,
                  scheduler,
-                 metric):
+                 metric,
+                 cp_dir):
         super(Trainer, self).__init__()
 
         self.config = config
@@ -47,6 +48,7 @@ class Trainer():
 
         # Instantiate loggers
         self.save_dir = os.path.join('runs', self.train_id)
+        self.cp_dir = cp_dir
         self.tsboard = TensorboardLogger(path=self.save_dir)
 
     def save_checkpoint(self, epoch, val_loss, val_metric):
@@ -61,7 +63,8 @@ class Trainer():
         if val_loss < self.best_loss:
             print(
                 f'Loss is improved from {self.best_loss: .6f} to {val_loss: .6f}. Saving weights...')
-            torch.save(data, os.path.join(self.save_dir, 'best_loss.pth'))
+            torch.save(data, os.path.join(
+                self.cp_dir, f'best_loss{val_loss: .3f}.pth'))
             # Update best_loss
             self.best_loss = val_loss
         else:

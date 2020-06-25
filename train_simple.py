@@ -22,7 +22,7 @@ def train(config):
         if torch.cuda.is_available() and config.get('gpus', None) is not None \
         else 'cpu'
     device = torch.device(dev_id)
-
+    cp_dir = config['trainer']['cp_dir']
     # Get pretrained model
     pretrained_path = config["pretrained"]
 
@@ -71,7 +71,7 @@ def train(config):
     set_seed()
     metric = {config['metric']['name']: get_instance(config['metric'])}
 
-    # 6: Create trainer
+    # 7: Create trainer
     set_seed()
     trainer = Trainer(device=device,
                       config=config,
@@ -79,7 +79,8 @@ def train(config):
                       criterion=criterion,
                       optimier=optimizer,
                       scheduler=scheduler,
-                      metric=metric)
+                      metric=metric,
+                      cp_dir=cp_dir)
 
     # 7: Start to train
     set_seed()

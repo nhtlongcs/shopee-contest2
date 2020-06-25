@@ -31,6 +31,7 @@ dataset:
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
+            csv_val_dir:        train.csv  
             csv_test_dir:       test.csv
             is_train:           True  
         loader:
@@ -45,13 +46,15 @@ dataset:
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
+            csv_val_dir:        train.csv
             csv_test_dir:       test.csv
-            is_train:           True  
+            is_train:           False  
         loader:
             name: shopee_loader
             args:
                 batch_size:     1
 trainer: 
     nepochs: 10
+    cp_dir: /home/ken/shopee_ws/cp/
     val_step: 1
     log_step: 1

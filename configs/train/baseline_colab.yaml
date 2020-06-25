@@ -3,7 +3,7 @@ pretrained: Null
 model:
     name:                       baseline_eff_net
     args:
-        version:                1
+        version:                4
         nclasses:               42
 optimizer:
     name:                       Adam
@@ -40,7 +40,7 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     128
+                batch_size:     64
                 shuffle:        True
     val:
         name: shopee_raw
@@ -55,9 +55,9 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     128
+                batch_size:     64
 trainer: 
-    nepochs: 10
-    cp_dir: /content/gdrive/My\ Drive/
+    nepochs: 7
+    cp_dir: '/content/gdrive/My Drive/Shopee competition/cp-effnet7'
     val_step: 1
     log_step: 1

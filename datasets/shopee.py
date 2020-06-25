@@ -29,7 +29,7 @@ class shopee_raw(data.Dataset):
             self.data = list(csv.reader(open(csv_train_dir)))
         elif self.is_train == False:
             self.data = list(csv.reader(open(csv_val_dir)))
-            self.data = self.data[:min(12000, len(self.data))]
+            # self.data = self.data[:min(12000, len(self.data))]
 
         self.data.pop(0)  # clear header
         self.data, self.labels = zip(*self.data)

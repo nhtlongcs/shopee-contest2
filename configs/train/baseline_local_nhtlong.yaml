@@ -34,7 +34,7 @@ dataset:
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
-            csv_val_dir:        train.csv  
+            csv_val_dir:        val.csv  
             csv_test_dir:       test.csv
             is_train:           True  
         loader:
@@ -49,7 +49,7 @@ dataset:
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
-            csv_val_dir:        train.csv
+            csv_val_dir:        val.csv
             csv_test_dir:       test.csv
             is_train:           False  
         loader:

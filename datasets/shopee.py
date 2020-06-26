@@ -33,9 +33,9 @@ class shopee_raw(data.Dataset):
 
         self.data.pop(0)  # clear header
         self.data, self.labels = zip(*self.data)
-        self.data = [os.path.join(self.labels[i], self.data[i])
-                     for i in range(len(self.data))]
         self.labels = list(map(int, self.labels))
+        self.data = [os.path.join("{0:0=2d}".format(self.labels[i]), self.data[i])
+                     for i in range(len(self.data))]
 
     def __getitem__(self, index):
         if self.is_train:

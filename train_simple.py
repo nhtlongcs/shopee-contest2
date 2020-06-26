@@ -38,10 +38,12 @@ def train(config):
     train_dataloader = get_instance(config['dataset']['train']['loader'],
                                     dataset=train_dataset)
 
+    print("train :", len(train_dataset))
     set_seed()
     val_dataset = get_instance(config['dataset']['val'])
     val_dataloader = get_instance(config['dataset']['val']['loader'],
                                   dataset=val_dataset)
+    print("val :", len(val_dataset))
 
     # 2: Define network
     set_seed()

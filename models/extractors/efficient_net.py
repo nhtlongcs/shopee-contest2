@@ -11,7 +11,7 @@ class EfficientNetExtractor(ExtractorNetwork):
         self.extractor = EfficientNet.from_pretrained(
             f'efficientnet-b{version}')
         self.feature_dim = self.extractor._fc.in_features
-        
+
     def forward(self, x):
         x = self.extractor.extract_features(x)
         x = self.extractor._avg_pooling(x)

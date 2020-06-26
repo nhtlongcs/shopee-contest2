@@ -1,7 +1,7 @@
 id: 1
 pretrained: Null
 model:
-    name:                       baseline_eff_net
+    name:                       baseline_eff_freeze
     args:
         version:                1
         nclasses:               42

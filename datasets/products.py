@@ -20,7 +20,7 @@ class Product(data.Dataset):
     def __getitem__(self, i):
         lbl = self.labels[i] 
         
-        img = Image.open(self.dirs[i])
+        img = Image.open(self.dirs[i]).convert('RGB')
         transform_ = tvtf.Compose([tvtf.Resize((224,224)), tvtf.ToTensor(),
                               tvtf.Normalize((0.5,), (0.5,)),
                               ])

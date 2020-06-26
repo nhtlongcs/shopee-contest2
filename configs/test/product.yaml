@@ -1,0 +1,18 @@
+pretrained: current.pth
+model: 
+    name:                         SimpleEfficientNet
+    args:
+        nclasses:                 42
+metric:
+    - name:                       Accuracy
+      args:
+dataset:
+    test:
+        name:                     Product
+        args:
+            root_dir:            data/test
+            csv_path:               data/test.csv       
+        loader:
+            batch_size:           64
+            shuffle:              False
+output:     Infer

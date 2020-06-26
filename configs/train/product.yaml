@@ -1,13 +1,14 @@
 gpus:                             null
-pretrained:                       null
-model: 
+pretrained:                       /content/drive/My Drive/Shopee Code League/runs/None-2020_06_26-00_00_19/best_loss.pth
+model:
     name:                         SimpleEfficientNet
     args:
         nclasses:                 42
+        freeze_backbone:          False
 optimizer:
     name:                         Adam
     args:
-        lr:                       0.01
+        lr:                       0.001
         # momentum:                 0.5
 loss:
     name:                         CrossEntropyLoss
@@ -20,26 +21,27 @@ scheduler:
     name:                         ReduceLROnPlateau
     args:
         mode:                     min
-        factor:                   0.5 
-        patience:                 5 
+        factor:                   0.5
+        patience:                 5
         verbose:                  True
 dataset:
     train:
         name:                     Product
         args:
             root_dir:            data/train/train
-            csv_path:               data/train.csv       
+            csv_path:               data/train.csv
         loader:
-            batch_size:           64
+            batch_size:           128
             shuffle:              True
-    val: 
+    val:
         name:                     Product
         args:
             root_dir:            data/train/val
-            csv_path:               data/val.csv   
+            csv_path:               data/val.csv
         loader:
-            batch_size:           64
+            batch_size:           128
 trainer:
-    nepochs:                      5
+    nepochs:                      20
     val_step:                 1
     log_step:                     1
+    save_dir:                   /content/drive/My Drive/Shopee Code League/runs

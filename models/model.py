@@ -26,7 +26,7 @@ class _EfficientNet(nn.Module):
 
 
 class SimpleEfficientNet(nn.Module):
-    def __init__(self, nclasses, backbone = 'effnetb0', freeze_backbone = True,):
+    def __init__(self, nclasses, backbone = 'effnetb0', freeze_backbone = True):
         super().__init__()
         if (backbone[:6] == 'effnet'):
             self.cnn = _EfficientNet(backbone.replace('effnet', ''), is_frozen=freeze_backbone)
@@ -41,5 +41,16 @@ class SimpleEfficientNet(nn.Module):
         out = self.cls(x)
         return out
 
+
+class EfficientAttention(nn.Module):
+    def __init__(self, nclasses, backbone = 'effnetb0', freeze_backbone = True):
+        super().__init__()
+        if (backbone[:6] == 'effnet'):
+            self.cnn = _EfficientNet(backbone.replace('effnet', ''), is_frozen=freeze_backbone)
+            self.num_features = self.cnn.num_features
+        #self.pool = nn.AdaptiveAvgPool2d(1)
+        self.attn = nn.TransformerEncoder(nn.TransformerEncoderLayer(self.num_features, 4), 1)
+        self.cls = nn.Linear(self.num_features, nclasses)
+        self.nclasses = nclasses
 if __name__ == "__main__":
     print("Hello")

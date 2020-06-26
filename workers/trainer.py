@@ -37,7 +37,7 @@ class Trainer():
         self.nepochs = self.config['trainer']['nepochs']
         self.log_step = self.config['trainer']['log_step']
         self.val_step = self.config['trainer']['val_step']
-        # self.debug = self.config['debug']
+        self.debug = None #self.config['debug']
 
         # Instantiate global variables
         self.best_loss = np.inf
@@ -74,7 +74,7 @@ class Trainer():
             self.best_metric = val_metric
         
         else:
-            print("Metric is not improved from %.5f." % (self.bess_metric))
+            print("Metric is not improved from %.5f." % (self.best_metric))
 
         print('Saving current model...')
         torch.save(data, os.path.join(self.save_dir, 'current.pth'))
@@ -125,8 +125,7 @@ class Trainer():
     @torch.no_grad()
     def val_epoch(self, epoch, dataloader):
         running_loss = meter.AverageValueMeter()
-        for m in self.metric.values():
-            m.reset()
+        self.metric.reset()
 
         self.model.eval()
         print('Evaluating........')
@@ -144,14 +143,14 @@ class Trainer():
             # 5: Update metric
             outs = detach(outs)
             lbl = detach(lbl)
-            for m in self.metric.values():
-                value = m.calculate(outs, lbl)
-                m.update(value)
+            value = self.metric.calculate(outs, lbl)
+            self.metric.update(value)
 
         print('+ Evaluation result')
         avg_loss = running_loss.value()[0]
         print('Loss:', avg_loss)
         self.val_loss.append(avg_loss)
+        self.val_metric.append(self.metric.value())
         self.tsboard.update_loss('val', avg_loss, epoch)
 
         print(self.metric.summary()) 
@@ -180,5 +179,5 @@ class Trainer():
                 if not self.debug:
                     # Get latest val loss here
                     val_loss = self.val_loss[-1]
-                    val_metric = {k: m[-1] for k, m in self.val_metric.items()}
+                    val_metric = self.val_metric[-1]
                     self.save_checkpoint(epoch, val_loss, val_metric)

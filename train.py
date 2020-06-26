@@ -13,14 +13,15 @@ from metrics.metric import Accuracy
 from losses.losses import * 
 from datasets.products import *
 from models.model import * 
+#from utils.utils import *
 
 import argparse 
 
 def get_instance(config, **kwargs):
-    assert 'name' in config 
-    config.setdefault('args', {})
-    if config['args'] is None: config['args'] = {}
-    return globals()[config['name']](**config['args'], **kwargs)
+     assert 'name' in config 
+     config.setdefault('args', {})
+     if config['args'] is None: config['args'] = {}
+     return globals()[config['name']](**config['args'], **kwargs)
 
 def train(config):
     assert config is not None, "Do not have config file!"
@@ -45,7 +46,16 @@ def train(config):
     # Define network 
     model = get_instance(config['model']).to(device)
     # print(model)
+    if pretrained_path:
+      pretrained = torch.load(pretrained_path, map_location=dev_id)
+      state_dict = pretrained['model_state_dict']
+    # state_dict = { k.replace('resnet', 'cnn'): v for k, v in state_dict.items() }
+      model.load_state_dict(state_dict)
 
+    for item in ["model"]:
+        config[item] = pretrained["config"][item]
+    
+    
     # Define loss
     criterion = get_instance(config['loss']).to(device) 
 

@@ -1,3 +1,5 @@
+from utils.device import move_to, detach
+from loggers import TensorboardLogger
 import torch
 from torch import nn, optim
 from torch.utils import data
@@ -6,9 +8,8 @@ from tqdm import tqdm
 import numpy as np
 import os
 from datetime import datetime
-
-from loggers import TensorboardLogger
-from utils.device import move_to, detach
+import sys
+np.set_printoptions(threshold=sys.maxsize)
 
 
 class Trainer():

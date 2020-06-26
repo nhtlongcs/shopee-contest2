@@ -54,11 +54,13 @@ class ConfusionMatrix():
         return 0
 
     def summary(self):
+        print(self.cm)
         return self.cm
 
     def display(self):
         df_cm = pd.DataFrame(self.cm, index=range(
             self.nclasses), columns=range(self.nclasses))
+        print(df_cm)
         plt.figure(figsize=(10, 7))
         sn.heatmap(df_cm, annot=True, cmap='YlGnBu')
         plt.tight_layout()

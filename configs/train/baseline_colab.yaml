@@ -1,10 +1,11 @@
 id: 1
 pretrained: Null
 model:
-    name:                       baseline_eff_freeze
+    name:                       baseline_eff_net
     args:
         version:                2
         nclasses:               42
+        freeze:                 False
 optimizer:
     name:                       Adam
     args:
@@ -17,12 +18,9 @@ metric:
     -   name:                       Accuracy
         args:                       Null
 scheduler:
-    name:                       ReduceLROnPlateau
+    name:                       CosineAnnealingLR
     args:
-        mode:                   min
-        factor:                 0.5
-        patience:               5 
-        verbose:                True
+        last_epoch:             -1
 dataset:
     train:
         name: shopee_raw

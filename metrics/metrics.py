@@ -57,7 +57,7 @@ class ConfusionMatrix():
         print(self.cm)
         return self.cm
 
-    def display(self):
+    def display(self, output_dir=''):
         df_cm = pd.DataFrame(self.cm, index=range(
             self.nclasses), columns=range(self.nclasses))
         print(df_cm)

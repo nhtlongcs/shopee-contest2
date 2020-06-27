@@ -39,6 +39,7 @@ def train(config):
                                     dataset=train_dataset)
 
     print("train :", len(train_dataset))
+    print("train loader :", len(train_dataloader))
     set_seed()
     val_dataset = get_instance(config['dataset']['val'])
     val_dataloader = get_instance(config['dataset']['val']['loader'],

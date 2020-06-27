@@ -1,18 +1,18 @@
 id: 1
 pretrained: Null
 model:
-    name:                       baseline_eff_freeze
+    name:                       baseline_eff_net
     args:
-        version:                1
+        version:                2
         nclasses:               42
+        freeze:                 False
 optimizer:
     name:                       Adam
     args:
         lr:                     0.01
 loss:
-    name:                       CrossEntropyLoss
+    name:                       SmoothedCrossEntropy
     args:
-        ignore_index:           42
 metric:
     -   name:                       Accuracy
         args:                       Null
@@ -20,12 +20,9 @@ metric:
         args:                       
             nclasses:               42
 scheduler:
-    name:                       ReduceLROnPlateau
+    name:                       CosineAnnealingLR
     args:
-        mode:                   min
-        factor:                 0.5
-        patience:               5 
-        verbose:                True
+        T_max:                  73774        
 dataset:
     train:
         name: shopee_raw

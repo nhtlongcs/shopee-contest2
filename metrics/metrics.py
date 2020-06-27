@@ -37,11 +37,12 @@ class Accuracy():
 
 
 class ConfusionMatrix():
-    def __init__(self, nclasses, output_dir):
+    def __init__(self, nclasses, output_dir, verbose=False):
         self.nclasses = nclasses
         self.reset()
         self.output_dir = output_dir
         self.count = 1
+        self.verbose = verbose
 
     def calculate(self, output, target):
         pred = torch.argmax(output, dim=1)
@@ -64,7 +65,8 @@ class ConfusionMatrix():
     def display(self, output_dir, name):
         df_cm = pd.DataFrame(self.cm, index=range(
             self.nclasses), columns=range(self.nclasses))
-        print(df_cm)
+        if self.verbose:
+            print(df_cm)
         plt.figure(figsize=(10, 7))
         sn.heatmap(df_cm, annot=True, cmap='YlGnBu')
         plt.tight_layout()

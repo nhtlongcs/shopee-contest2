@@ -24,7 +24,7 @@ metric:
 scheduler:
     name:                       CosineAnnealingLR
     args:
-        last_epoch:             -1
+        T_max:                  73774     
 dataset:
     train:
         name: shopee_raw

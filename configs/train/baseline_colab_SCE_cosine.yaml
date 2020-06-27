@@ -9,41 +9,42 @@ model:
 optimizer:
     name:                       Adam
     args:
-        lr:                     0.01
+        lr:                     0.0001
 loss:
-    name:                       SmoothedCrossEntropy
+    name:                       CrossEntropyLoss
     args:
+        ignore_index:           42
 metric:
     -   name:                   Accuracy
         args:                   Null
     -   name:                   ConfusionMatrix
         args:                       
             nclasses:           42
-            output_dir:         '/home/ken/shopee_ws/cp'    
+            output_dir:         '/content/gdrive/My Drive/Shopee competition/cp-effnet2-SCE'    
 scheduler:
     name:                       CosineAnnealingLR
     args:
-        T_max:                  73774        
+        last_epoch:             -1
 dataset:
     train:
         name: shopee_raw
         args:
-            data_root_dir:      /home/ken/shopee_ws/data/         
+            data_root_dir:      /content/data/         
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
-            csv_val_dir:        val.csv  
+            csv_val_dir:        val.csv
             csv_test_dir:       test.csv
             is_train:           True  
         loader:
             name: shopee_loader
             args:
-                batch_size:     1
+                batch_size:     64
                 shuffle:        True
     val:
         name: shopee_raw
         args:
-            data_root_dir:      /home/ken/shopee_ws/data/          
+            data_root_dir:      /content/data/          
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
@@ -53,9 +54,9 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     1
+                batch_size:     64
 trainer: 
     nepochs: 10
-    cp_dir: /home/ken/shopee_ws/cp/
+    cp_dir: '/content/gdrive/My Drive/Shopee competition/cp-effnet2-SCE'
     val_step: 1
     log_step: 1

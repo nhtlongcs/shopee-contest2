@@ -5,6 +5,7 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sn
+import os
 
 
 class Accuracy():
@@ -36,9 +37,11 @@ class Accuracy():
 
 
 class ConfusionMatrix():
-    def __init__(self, nclasses):
+    def __init__(self, nclasses, output_dir):
         self.nclasses = nclasses
         self.reset()
+        self.output_dir = output_dir
+        self.count = 1
 
     def calculate(self, output, target):
         pred = torch.argmax(output, dim=1)
@@ -54,15 +57,17 @@ class ConfusionMatrix():
         return 0
 
     def summary(self):
-        print(self.cm)
+        self.display(self.output_dir, str(self.count))
+        self.count += 1
         return self.cm
 
-    def display(self, output_dir=''):
+    def display(self, output_dir, name):
         df_cm = pd.DataFrame(self.cm, index=range(
             self.nclasses), columns=range(self.nclasses))
         print(df_cm)
         plt.figure(figsize=(10, 7))
         sn.heatmap(df_cm, annot=True, cmap='YlGnBu')
         plt.tight_layout()
-        plt.show()
+        # plt.show()
+        plt.savefig(os.path.join(output_dir, name))
         plt.close()

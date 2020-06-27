@@ -15,12 +15,19 @@ loss:
     args:
         ignore_index:           42
 metric:
-    -   name:                       Accuracy
-        args:                       Null
+    -   name:                   Accuracy
+        args:                   Null
+    -   name:                   ConfusionMatrix
+        args:                       
+            nclasses:           42
+            output_dir:         '/content/gdrive/My Drive/Shopee competition/cp-effnet2-SCE'    
 scheduler:
-    name:                       CosineAnnealingLR
+    name:                         ReduceLROnPlateau
     args:
-        last_epoch:             -1
+        mode:                     min
+        factor:                   0.5
+        patience:                 5 
+        verbose:                  True
 dataset:
     train:
         name: shopee_raw
@@ -53,6 +60,6 @@ dataset:
                 batch_size:     64
 trainer: 
     nepochs: 7
-    cp_dir: '/content/gdrive/My Drive/Shopee competition/cp-effnet7'
+    cp_dir: '/content/gdrive/My Drive/Shopee competition/cp-effnet2'
     val_step: 1
     log_step: 1

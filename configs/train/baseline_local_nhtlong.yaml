@@ -38,7 +38,7 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     1
+                batch_size:     2
                 shuffle:        True
     val:
         name: shopee_raw
@@ -53,7 +53,7 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     1
+                batch_size:     2
 trainer: 
     nepochs: 10
     cp_dir: /home/ken/shopee_ws/cp/

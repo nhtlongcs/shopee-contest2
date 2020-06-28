@@ -1,14 +1,17 @@
-from utils.device import move_to, detach
-from loggers import TensorboardLogger
+import os
+import sys
+from datetime import datetime
+
+import numpy as np
 import torch
 from torch import nn, optim
 from torch.utils import data
 from torchnet import meter
 from tqdm import tqdm
-import numpy as np
-import os
-from datetime import datetime
-import sys
+
+from loggers import TensorboardLogger
+from utils.device import detach, move_to
+
 np.set_printoptions(threshold=sys.maxsize)
 
 

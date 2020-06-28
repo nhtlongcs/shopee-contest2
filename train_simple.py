@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader
 from torch.utils import data
 from tqdm import tqdm
 
+from torchsummary import summary
 from workers.trainer import Trainer
 from utils.random_seed import set_seed
 from utils.getter import get_instance
@@ -49,7 +50,7 @@ def train(config):
     # 2: Define network
     set_seed()
     model = get_instance(config['model']).to(device)
-
+    summary(model, (3, 224, 224))
     # Train from pretrained if it is not None
     if pretrained is not None:
         model.load_state_dict(pretrained['model_state_dict'])

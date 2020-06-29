@@ -11,11 +11,11 @@ from torchvision import transforms as tvtf
 from utils.getter import get_instance
 
 # config_path = '/content/shopee-contest2/configs/train/baseline_colab.yaml'
-cp_model_dir = '/home/ken/shopee_ws/cp/best_loss 6277212.847.pth'
+cp_model_dir = '/home/ken/shopee_ws/cp/best_loss.pth'
 test_dir = '/content/data/test/test/'
 csv_test_dir = '/content/data/test.csv'
 
-config = torch.load(cp_model_dir)['config']
+config = torch.load(cp_model_dir).device('cpu')['config']
 
 
 dev_id = 'cuda:{}'.format(config['gpus']) \

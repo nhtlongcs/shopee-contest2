@@ -79,7 +79,7 @@ class Trainer():
                 print(
                     f'{k} is improved from {self.best_metric[k]: .6f} to {val_metric[k]: .6f}. Saving weights...')
                 torch.save(data, os.path.join(
-                    self.cp_dir, f'best_metric_{k}.pth'))
+                    self.cp_dir, f'best_metric_{k}_{val_metric[k]: .3f}.pth'))
                 self.best_metric[k] = val_metric[k]
             else:
                 print(

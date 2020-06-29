@@ -50,7 +50,8 @@ def train(config):
     # 2: Define network
     set_seed()
     model = get_instance(config['model']).to(device)
-    summary(model, (3, 224, 224))
+    summary(model, (3, 256, 256))
+    # print('DONE')
     # Train from pretrained if it is not None
     if pretrained is not None:
         model.load_state_dict(pretrained['model_state_dict'])

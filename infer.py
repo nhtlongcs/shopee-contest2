@@ -10,21 +10,22 @@ from torchvision import transforms as tvtf
 
 from utils.getter import get_instance
 
-config_path = '/content/shopee-contest2/configs/train/baseline_colab.yaml'
-cp_model_dir = '/content/cp/best_loss 3.693.pth'
+# config_path = '/content/shopee-contest2/configs/train/baseline_colab.yaml'
+cp_model_dir = '/home/ken/shopee_ws/cp/best_loss 6277212.847.pth'
 test_dir = '/content/data/test/test/'
 csv_test_dir = '/content/data/test.csv'
 
-config = yaml.load(open(config_path, 'r'), Loader=yaml.Loader)
+config = torch.load(cp_model_dir)['config']
+
 
 dev_id = 'cuda:{}'.format(config['gpus']) \
     if torch.cuda.is_available() and config.get('gpus', None) is not None \
     else 'cpu'
 device = torch.device(dev_id)
-
-print('load weights-----------------------')
 model = get_instance(config['model']).to(device)
 model.load_state_dict(torch.load(cp_model_dir)['model_state_dict'])
+
+print('load weights-----------------------')
 
 # Classify
 print('generate submission----------------')

@@ -68,7 +68,7 @@ class Trainer():
             print(
                 f'Loss is improved from {self.best_loss: .6f} to {val_loss: .6f}. Saving weights...')
             torch.save(data, os.path.join(
-                self.cp_dir, f'best_loss{val_loss: .3f}.pth'))
+                self.cp_dir, f'best_loss.pth'))
             # Update best_loss
             self.best_loss = val_loss
         else:
@@ -85,8 +85,8 @@ class Trainer():
                 print(
                     f'{k} is not improved from {self.best_metric[k]:.6f}.')
 
-        # print('Saving current model...')
-        # torch.save(data, os.path.join(self.save_dir, 'current.pth'))
+        print('Saving current model...')
+        torch.save(data, os.path.join(self.cp_dir, 'current.pth'))
 
     def train_epoch(self, epoch, dataloader):
         # 0: Record loss during training process

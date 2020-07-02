@@ -44,12 +44,11 @@ class baseline_eff_net(nn.Module):
         self.feature_dim = self.extractor.feature_dim
 
         self.classifier = nn.Sequential(
-            nn.Linear(self.feature_dim, 1024),
+            nn.Linear(self.feature_dim, 512),
             nn.Dropout(0.2),
-            nn.BatchNorm1d(1024),
+            nn.BatchNorm1d(512),
             nn.ReLU(),
             nn.Dropout(0.2),
-            nn.Linear(1024, 512),
             nn.Linear(512, nclasses)
         )
 

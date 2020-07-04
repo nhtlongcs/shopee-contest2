@@ -15,7 +15,7 @@ class shopee_raw(data.Dataset):
         self.is_train = is_train
         self.root_dir = data_root_dir
         self.train_dir = os.path.join(self.root_dir, train_dir)
-        self.val_dir = os.path.join(self.root_dir, test_dir)
+        self.val_dir = os.path.join(self.root_dir, train_dir)
         self.test_dir = os.path.join(self.root_dir, test_dir)
 
         csv_train_dir = self.root_dir + csv_train_dir
@@ -34,9 +34,8 @@ class shopee_raw(data.Dataset):
         self.data, self.labels = zip(*self.data)
         self.labels = list(map(int, self.labels))
 
-        if self.is_train:
-            self.data = [os.path.join("{0:0=2d}".format(self.labels[i]), self.data[i])
-                         for i in range(len(self.data))]
+        self.data = [os.path.join("{0:0=2d}".format(self.labels[i]), self.data[i])
+                     for i in range(len(self.data))]
 
     def __getitem__(self, index):
         if self.is_train:

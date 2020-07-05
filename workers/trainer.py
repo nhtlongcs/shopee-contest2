@@ -132,6 +132,7 @@ class Trainer():
                 for m in self.metric.values():
                     value = m.calculate(outs, lbl)
                     m.update(value)
+                break
         print('+ Training result')
         avg_loss = total_loss.value()[0]
         print('Loss:', avg_loss)
@@ -163,6 +164,7 @@ class Trainer():
             for m in self.metric.values():
                 value = m.calculate(outs, lbl)
                 m.update(value)
+            break
         print('+ Evaluation result')
         avg_loss = running_loss.value()[0]
         print('Loss:', avg_loss)

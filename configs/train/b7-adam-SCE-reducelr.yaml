@@ -1,4 +1,4 @@
-id: 1
+id:                             7
 pretrained: Null
 model:
     name:                       baseline_eff_net
@@ -11,9 +11,8 @@ optimizer:
     args:
         lr:                     0.0001
 loss:
-    name:                       CrossEntropyLoss
+    name:                       SmoothedCrossEntropy
     args:
-        ignore_index:           42
 metric:
     -   name:                   Accuracy
         args:                   Null
@@ -23,12 +22,12 @@ scheduler:
         mode:                     min
         factor:                   0.5
         patience:                 5 
-        verbose:                  True
+        verbose:                  True     
 dataset:
     train:
         name: shopee_raw
         args:
-            data_root_dir:      /content/data/         
+            data_root_dir:      data/         
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
@@ -38,12 +37,12 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     64
+                batch_size:     16
                 shuffle:        True
     val:
         name: shopee_raw
         args:
-            data_root_dir:      /content/data/          
+            data_root_dir:      data/          
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
@@ -53,9 +52,9 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     64
+                batch_size:     16
 trainer: 
-    nepochs: 7
-    cp_dir: '/content/gdrive/My Drive/Shopee competition/cp-effnet2'
+    nepochs: 5
+    cp_dir: 'checkpoint/'
     val_step: 1
     log_step: 1

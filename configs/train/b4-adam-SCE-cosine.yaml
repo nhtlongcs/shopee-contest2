@@ -1,4 +1,4 @@
-id: 1
+id:                             4
 pretrained: Null
 model:
     name:                       baseline_eff_net
@@ -19,7 +19,7 @@ metric:
 scheduler:
     name:                       CosineAnnealingLR
     args:
-        T_max:                  2306     
+        T_max:                  3293     
 dataset:
     train:
         name: shopee_raw
@@ -51,7 +51,7 @@ dataset:
             args:
                 batch_size:     32
 trainer: 
-    nepochs: 10
+    nepochs: 5
     cp_dir: 'checkpoint/'
     val_step: 1
     log_step: 1

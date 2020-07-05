@@ -52,7 +52,8 @@ class Trainer():
 
         # Instantiate loggers
         self.save_dir = os.path.join('runs', self.train_id)
-        self.cp_dir = os.path.join(cp_dir, self.config['model']['name'])
+        self.cp_dir = os.path.join(
+            cp_dir, self.config['model']['name']) + str(self.config.get('id', 'None'))
 
         self.tsboard = TensorboardLogger(path=self.save_dir)
 
@@ -131,7 +132,6 @@ class Trainer():
                 for m in self.metric.values():
                     value = m.calculate(outs, lbl)
                     m.update(value)
-            break
         print('+ Training result')
         avg_loss = total_loss.value()[0]
         print('Loss:', avg_loss)
@@ -163,7 +163,6 @@ class Trainer():
             for m in self.metric.values():
                 value = m.calculate(outs, lbl)
                 m.update(value)
-            break
         print('+ Evaluation result')
         avg_loss = running_loss.value()[0]
         print('Loss:', avg_loss)

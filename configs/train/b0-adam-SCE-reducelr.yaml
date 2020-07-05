@@ -1,4 +1,4 @@
-id: 1
+id:                             1
 pretrained: Null
 model:
     name:                       baseline_eff_net
@@ -54,7 +54,7 @@ dataset:
             args:
                 batch_size:     32
 trainer: 
-    nepochs: 10
+    nepochs: 20
     cp_dir: 'checkpoint/'
     val_step: 1
     log_step: 1

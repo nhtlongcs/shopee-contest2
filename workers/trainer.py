@@ -52,8 +52,12 @@ class Trainer():
 
         # Instantiate loggers
         self.save_dir = os.path.join('runs', self.train_id)
-        self.cp_dir = cp_dir
+        self.cp_dir = os.path.join(cp_dir, self.config['model']['name'])
+
         self.tsboard = TensorboardLogger(path=self.save_dir)
+
+        if not os.path.exists(self.cp_dir):
+            os.makedirs(self.cp_dir)
 
     def save_checkpoint(self, epoch, val_loss, val_metric):
 
@@ -79,14 +83,14 @@ class Trainer():
                 print(
                     f'{k} is improved from {self.best_metric[k]: .6f} to {val_metric[k]: .6f}. Saving weights...')
                 torch.save(data, os.path.join(
-                    self.cp_dir, f'best_metric_{k}_{val_metric[k]: .3f}.pth'))
+                    self.cp_dir, f'best_metric_{k}.pth'))
                 self.best_metric[k] = val_metric[k]
             else:
                 print(
                     f'{k} is not improved from {self.best_metric[k]:.6f}.')
 
-        print('Saving current model...')
-        torch.save(data, os.path.join(self.cp_dir, 'current.pth'))
+        # print('Saving current model...')
+        # torch.save(data, os.path.join(self.cp_dir, 'current.pth'))
 
     def train_epoch(self, epoch, dataloader):
         # 0: Record loss during training process
@@ -127,7 +131,7 @@ class Trainer():
                 for m in self.metric.values():
                     value = m.calculate(outs, lbl)
                     m.update(value)
-
+            break
         print('+ Training result')
         avg_loss = total_loss.value()[0]
         print('Loss:', avg_loss)
@@ -159,7 +163,7 @@ class Trainer():
             for m in self.metric.values():
                 value = m.calculate(outs, lbl)
                 m.update(value)
-
+            break
         print('+ Evaluation result')
         avg_loss = running_loss.value()[0]
         print('Loss:', avg_loss)

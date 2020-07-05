@@ -3,7 +3,7 @@ pretrained: Null
 model:
     name:                       baseline_eff_net
     args:
-        version:                2
+        version:                4
         nclasses:               42
         freeze:                 False
 optimizer:
@@ -16,10 +16,6 @@ loss:
 metric:
     -   name:                   Accuracy
         args:                   Null
-    -   name:                   ConfusionMatrix
-        args:                       
-            nclasses:           42
-            output_dir:         '/content/gdrive/My Drive/Shopee competition/cp-effnet2-SCE'    
 scheduler:
     name:                       CosineAnnealingLR
     args:
@@ -28,7 +24,7 @@ dataset:
     train:
         name: shopee_raw
         args:
-            data_root_dir:      /content/data/         
+            data_root_dir:      data/         
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
@@ -43,7 +39,7 @@ dataset:
     val:
         name: shopee_raw
         args:
-            data_root_dir:      /content/data/          
+            data_root_dir:      data/          
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
@@ -56,6 +52,6 @@ dataset:
                 batch_size:     32
 trainer: 
     nepochs: 10
-    cp_dir: '/content/gdrive/My Drive/Shopee competition/cp-effnet2-SCE'
+    cp_dir: 'checkpoint/'
     val_step: 1
     log_step: 1

@@ -11,28 +11,20 @@ optimizer:
     args:
         lr:                     0.0001
 loss:
-    name:                       CrossEntropyLoss
+    name:                       SmoothedCrossEntropy
     args:
-        ignore_index:           42
 metric:
     -   name:                   Accuracy
         args:                   Null
-    -   name:                   ConfusionMatrix
-        args:                       
-            nclasses:           42
-            output_dir:         '/content/gdrive/My Drive/Shopee competition/cp-effnet2-SCE'    
 scheduler:
-    name:                         ReduceLROnPlateau
+    name:                       CosineAnnealingLR
     args:
-        mode:                     min
-        factor:                   0.5
-        patience:                 5 
-        verbose:                  True
+        T_max:                  2306     
 dataset:
     train:
         name: shopee_raw
         args:
-            data_root_dir:      /content/data/         
+            data_root_dir:      data/         
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
@@ -42,12 +34,12 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     64
+                batch_size:     32
                 shuffle:        True
     val:
         name: shopee_raw
         args:
-            data_root_dir:      /content/data/          
+            data_root_dir:      data/          
             train_dir:          train/train/
             test_dir:           test/test/
             csv_train_dir:      train.csv  
@@ -57,9 +49,9 @@ dataset:
         loader:
             name: shopee_loader
             args:
-                batch_size:     64
+                batch_size:     32
 trainer: 
-    nepochs: 7
-    cp_dir: '/content/gdrive/My Drive/Shopee competition/cp-effnet2'
+    nepochs: 10
+    cp_dir: 'checkpoint/'
     val_step: 1
     log_step: 1

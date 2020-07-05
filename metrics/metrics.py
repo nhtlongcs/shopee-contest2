@@ -58,7 +58,7 @@ class ConfusionMatrix():
         return 0
 
     def summary(self):
-        self.display(self.output_dir, str(self.count))
+        # self.display(self.output_dir, str(self.count))
         self.count += 1
         return self.cm
 

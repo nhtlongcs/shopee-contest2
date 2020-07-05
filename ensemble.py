@@ -10,27 +10,21 @@ from torchvision import transforms as tvtf
 
 from utils.getter import get_instance
 
-config_path = '/content/shopee-contest2/configs/train/baseline_colab.yaml'
+cp_model_dir = '/content/gdrive/My Drive/Shopee competition/cp-effnet6-v2-SCE/best_metric_Accuracy_ 0.931.pth'
 test_dir = '/content/data/test/test/'
 csv_test_dir = '/content/data/test.csv'
 
-config = yaml.load(open(config_path, 'r'), Loader=yaml.Loader)
+config = torch.load(cp_model_dir)['config']
+
 
 dev_id = 'cuda:{}'.format(config['gpus']) \
     if torch.cuda.is_available() and config.get('gpus', None) is not None \
     else 'cpu'
 device = torch.device(dev_id)
+model = get_instance(config['model']).to(device)
+model.load_state_dict(torch.load(cp_model_dir)['model_state_dict'])
 
 print('load weights-----------------------')
-cp_model_dir = ['/content/cp/best_loss 3.693.pth',
-                '/content/cp/best_loss 3.693.pth',
-                '/content/cp/best_loss 3.693.pth', ]
-
-model = [get_instance(config['model']).to(device)
-         for i in range(len(cp_model_dir))]
-
-for i in range(len(cp_model_dir)):
-    model[i].load_state_dict(torch.load(cp_model_dir[i])['model_state_dict'])
 
 # Classify
 print('generate submission----------------')
@@ -53,15 +47,9 @@ with torch.no_grad():
                            ])
         image = tf(image).unsqueeze(0)
         image = image.to(device)
-        preds = []
-
-        for i in range(len(cp_model_dir)):
-            outputs = model(image)
-            probs = torch.softmax(outputs, dim=1).to('cpu')
-            pred = probs.argmax(dim=1).numpy()
-            preds.append(pred)
-
-        pred = int(max(preds, key=preds.count))
+        outputs = model(image)
+        probs = torch.softmax(outputs, dim=1).to('cpu')
+        pred = probs.argmax(dim=1).numpy()
         result.append(pred)
 
 result = list(map(int, result))
